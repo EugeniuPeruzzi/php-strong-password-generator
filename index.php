@@ -1,4 +1,8 @@
 <?php 
+    session_start();
+    if(isset($_GET['pswrd']) && (int)$_GET['pswrd'] >= 5 && (int)$_GET['pswrd'] <= 175) {
+        $_SESSION['pswrd'] = $_GET['pswrd'];
+    }
     include __DIR__.'/prtials/functions.php'
 ?>
 
@@ -6,7 +10,7 @@
 Una nostra funzione utilizzerà questo dato per generare una password casuale (composta da lettere, lettere maiuscole, numeri e simboli) da restituire all’utente. 
 Scriviamo tutto (logica e layout) in un unico file index.php OK
 Milestone 2 Verificato il corretto funzionamento del nostro codice, spostiamo la logica in un file functions.php che includeremo poi nella pagina principale
-Milestone 3 (BONUS) Invece di visualizzare la password nella index, effettuare un redirect ad una pagina dedicata che tramite $_SESSION recupererà la password da mostrare all’utente. 
+Milestone 3 (BONUS) Invece di visualizzare la password nella index, effettuare un redirect ad una pagina dedicata che tramite $_SESSION recupererà la password da mostrare all’utente. OK
 -->
 
 
@@ -37,11 +41,9 @@ Milestone 3 (BONUS) Invece di visualizzare la password nella index, effettuare u
                  </div>
                  <!-- messaggio della password generata -->
                 <div class="message">
-                    <?php if(isset($_GET['pswrd']) && (int)$_GET['pswrd'] >= 5 && (int)$_GET['pswrd'] <= 175) { ?>
-                        <h2 class="ms-5 mt-5">La password rigenerata</h2>
-                        <div class="pswrd-box overflow-auto border rounded-2 p-4 ms-5 mt-2">
-                           <code> <?php echo  randomPswrd($_GET['pswrd']);?> </code>
-                        </div>
+                    <?php if(isset($_GET['pswrd']) && (int)$_GET['pswrd'] >= 5 && (int)$_GET['pswrd'] <= 175) { 
+                        header('Location: ./redirect.php')    
+                    ?>
                     <?php } else if ((isset($_GET['pswrd']) && (int)$_GET['pswrd'] <= 4)) { ?>
                         <div class="">
                             <?php echo '<div class="alert alert-warning mt-5 w-50 ms-5" role="alert">Il numero inserito deve essere superiore a 4</div>' ?>
